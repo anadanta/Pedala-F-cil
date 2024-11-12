@@ -1,0 +1,50 @@
+/* Arquivo: style2.css */
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Altura da tela inteira */
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+header, footer {
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    background-color: #f0f0f0;
+}
+
+/* Estilo para os campos de entrada */
+.input-container {
+    display: flex;
+    gap: 10px;
+    padding: 20px;
+}
+
+.input-container input {
+    padding: 8px;
+    font-size: 16px;
+    width: 200px;
+}
+
+.input-container button {
+    padding: 8px 16px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+}
+
+/* Estilo do mapa */
+#map {
+    width: 80%;      /* Largura do mapa (ajuste conforme necessário) */
+    height: 60vh;    /* Altura do mapa, ocupando 60% da tela */
+    max-width: 800px; /* Limite máximo de largura */
+    border: 2px solid #ddd;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
