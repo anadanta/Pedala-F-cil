@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style2.css">
+    <title>Pedala Fácil</title>
+</head>
+<body>
+    <header><a href="../proj_desen_web/index.html">Icone de login</a></header>
+    
+    <!-- Campos de entrada para local de partida e destino -->
+    <div class="input-container">
+        <input type="text" id="start-location" placeholder="Local de Partida">
+        <input type="text" id="end-location" placeholder="Destino">
+        <button id="search-route">Buscar Rota</button>
+    </div>
+
+    <!-- Mapa -->
+    <div id="map"></div>
+    
+    <!-- Botão para abrir rota no Google Maps -->
+    <div id="open-google-maps" style="display: none; margin-top: 20px;">
+        <a id="google-maps-link" href="#" target="_blank">
+            <button>Ver Rota no Google Maps</button>
+        </a>
+    </div>
+
+    <!-- CODIGO DE NOTICIAS -->
+     
+
+    <footer>Teste A</footer>
+
+    <script type="text/javascript">
+        let map;
+        let directionsService;
+        let directionsRenderer;
+        let autocompleteStart;
+        let autocompleteEnd;
+
+        function initMap() {
+            const centerPosition = { lat: -1.455833, lng: -48.503887 };
+
+            // Inicializa o mapa
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: centerPosition,
+                zoom: 15
+            });
+
+            // Inicializa os serviços de rotas
+            directionsService = new google.maps.DirectionsService();
+            directionsRenderer = new google.maps.DirectionsRenderer();
+            directionsRenderer.setMap(map);
+
+            // Inicializa o autocomplete para os campos de partida e destino
+            autocompleteStart = new google.maps.places.Autocomplete(document.getElementById('start-location'));
+            autocompleteEnd = new google.maps.places.Autocomplete(document.getElementById('end-location'));
+        }
+
+        document.getElementById('search-route').addEventListener('click', function() {
+            const startLocation = document.getElementById('start-location').value;
+            const endLocation = document.getElementById('end-location').value;
+            
+            if (startLocation && endLocation) {
+                calculateAndDisplayRoute(startLocation, endLocation);
+            } else {
+                alert("Por favor, preencha ambos os campos.");
+            }
+        });
+
+        function calculateAndDisplayRoute(start, end) {
+            directionsService.route(
+                {
+                    origin: start,
+                    destination: end,
+                    travelMode: google.maps.TravelMode.BICYCLING,
+                },
+                (response, status) => {
+                    if (status === 'OK') {
+                        directionsRenderer.setDirections(response);
+                        
+                        
+                        const googleMapsLink = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(start)}&destination=${encodeURIComponent(end)}&travelmode=bicycling`;
+                        
+                        // Atualizar o link e exibe o botão
+                        document.getElementById('google-maps-link').href = googleMapsLink;
+                        document.getElementById('open-google-maps').style.display = 'block';
+                    } else {
+                        alert('Não foi possível encontrar uma rota para os locais informados: ' + status);
+                    }
+                }
+            );
+        }
+    </script>
+
+    <!-- Script do Google Maps com Autocomplete e API Places -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAPizHY3HmteoZc94v9LrYYpTjSBdO3odw&callback&libraries=places&callback=initMap" async defer></script>
+</body>
+</html>
